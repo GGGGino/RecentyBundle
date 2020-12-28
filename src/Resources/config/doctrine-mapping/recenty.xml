@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <mapped-superclass name="GGGGino\RecentyBundle\Entity\RecentyBase" table="recenty">
+
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO"/>
+            <sequence-generator sequence-name="tablename_seq" allocation-size="100" initial-value="1" />
+        </id>
+
+        <field name="userId" column="name" type="string" length="180" />
+        <field name="entityTypeId" column="entity_type_id" type="string" length="180" />
+        <field name="entityId" column="entity_id" type="string" length="180" />
+        <field name="context" column="context" type="string" length="180" />
+        <field name="count" column="count" type="integer" nullable="false">
+            <options>
+                <option name="unsigned">true</option>
+                <option name="default">1</option>
+            </options>
+        </field>
+
+    </mapped-superclass>
+
+</doctrine-mapping>

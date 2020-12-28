@@ -43,6 +43,12 @@ abstract class RecentyBase
      */
     protected $lastUpdate;
 
+    public function __construct()
+    {
+        $this->count = 1;
+        $this->lastUpdate = new \DateTime();
+    }
+
     /**
      * @return int
      */

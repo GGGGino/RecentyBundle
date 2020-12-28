@@ -5,24 +5,26 @@ namespace GGGGino\RecentyBundle;
 use GGGGino\RecentyBundle\Strategy\StrategyInterface;
 use GGGGino\RecentyBundle\Wrapper\WrapperInterface;
 
+/**
+ * Class WrapperManager
+ * @package GGGGino\RecentyBundle
+ */
 class WrapperManager
 {
     /**
-     * @var StrategyInterface
+     * @var StrategyInterface[]
      */
-    private $strategy;
+    private $strategies;
 
-    /**
-     * WrapperManager constructor.
-     * @param StrategyInterface $strategy
-     */
-    public function __construct(StrategyInterface $strategy)
+    public function addStrategy(string $name, StrategyInterface $strategy)
     {
-        $this->strategy = $strategy;
+        $this->strategies[$name] = $strategy;
     }
 
-    public function increment(WrapperInterface $wrapper)
+    public function increment(string $name, WrapperInterface $wrapper)
     {
-        $this->strategy->increment($wrapper, 'userId');
+        if (!isset($this->strategies[$name])) { return; }
+
+        $this->strategies[$name]->increment($wrapper);
     }
 }

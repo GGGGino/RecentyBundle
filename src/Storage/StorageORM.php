@@ -3,7 +3,9 @@
 namespace GGGGino\RecentyBundle\Storage;
 
 use Doctrine\ORM\EntityManagerInterface;
+use GGGGino\RecentyBundle\Model\RecentyBase;
 use GGGGino\RecentyBundle\Model\RecentyInterface;
+use GGGGino\RecentyBundle\Utils\WrapperUtility;
 use GGGGino\RecentyBundle\Wrapper\WrapperInterface;
 
 /**
@@ -12,8 +14,14 @@ use GGGGino\RecentyBundle\Wrapper\WrapperInterface;
  */
 class StorageORM implements StorageInterface
 {
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
     public function __construct(EntityManagerInterface $em)
     {
+        $this->em = $em;
     }
 
     /**
@@ -21,7 +29,24 @@ class StorageORM implements StorageInterface
      */
     public function save(WrapperInterface $wrapper)
     {
-        // TODO: Implement save() method.
+        $recentyRepo = $this->em->getRepository(RecentyBase::class);
+
+        /** @var RecentyInterface $recenty */
+        $recenty = $recentyRepo->findOneBy(array(
+            'userId' => $wrapper->getUserId(),
+            'context' => $wrapper->getContext(),
+            'entityTypeId' => $wrapper->getEntityTypeId(),
+            'entityId' => $wrapper->getEntityId()
+        ));
+
+        if ($recenty) {
+            WrapperUtility::updateRecenty($wrapper, $recenty);
+        } else {
+            $recenty = WrapperUtility::createRecenty($wrapper);
+            $this->em->persist($recenty);
+        }
+
+        $this->em->flush();
     }
 
     /**

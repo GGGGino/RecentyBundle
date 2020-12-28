@@ -63,8 +63,7 @@ class StorageVolatile implements StorageInterface
         return array_filter($this->rows, function (RecentyInterface $recenty) use ($wrapper) {
             return $recenty->getUserId() === $wrapper->getUserId()
                 && $recenty->getContext() === $wrapper->getContext()
-                && $recenty->getEntityTypeId() === $wrapper->getEntityTypeId()
-                && $recenty->getEntityId() === $wrapper->getEntityId();
+                && $recenty->getEntityTypeId() === $wrapper->getEntityTypeId();
         });
     }
 
