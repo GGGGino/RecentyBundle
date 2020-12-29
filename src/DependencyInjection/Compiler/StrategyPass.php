@@ -8,6 +8,10 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
+/**
+ * Class StrategyPass
+ * @package GGGGino\RecentyBundle\DependencyInjection\Compiler
+ */
 class StrategyPass implements CompilerPassInterface
 {
     /**
@@ -19,17 +23,11 @@ class StrategyPass implements CompilerPassInterface
 
         $definition = $container->findDefinition(WrapperManager::class);
 
-        // find all service IDs with the app.mail_transport tag
-        $taggedServices = $container->findTaggedServiceIds('ggggino_skuskucart.request_verifier');
-
-        if ($container->getParameter('myService') == true) {
-            // here add every config strategy to the wrapperManager
-            die('return right');
-        }
-
-        foreach ($taggedServices as $id => $tags) {
-            // add the transport service to the TransportChain service
-            $definition->addMethodCall('addStrategy', [new Reference($id)]);
+        if ($clients = $container->getParameter('ggggino.recenty.clients')) {
+            foreach ($clients as $idClient => $client) {
+                // add the transport service to the TransportChain service
+                $definition->addMethodCall('addStrategy', [$idClient, new Reference($client['class'])]);
+            }
         }
     }
 }

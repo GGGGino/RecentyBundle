@@ -6,6 +6,10 @@ use GGGGino\RecentyBundle\Model\Recenty;
 use GGGGino\RecentyBundle\Model\RecentyInterface;
 use GGGGino\RecentyBundle\Wrapper\WrapperInterface;
 
+/**
+ * Class WrapperUtility
+ * @package GGGGino\RecentyBundle\Utils
+ */
 class WrapperUtility
 {
     /**

@@ -17,6 +17,11 @@ class StorageVolatile implements StorageInterface
      */
     private $rows;
 
+    public function __construct()
+    {
+        $this->rows = array();
+    }
+
     /**
      * @inheritDoc
      */

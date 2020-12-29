@@ -16,9 +16,21 @@ class WrapperManager
      */
     private $strategies;
 
+    /**
+     * @param string $name
+     * @param StrategyInterface $strategy
+     */
     public function addStrategy(string $name, StrategyInterface $strategy)
     {
         $this->strategies[$name] = $strategy;
+    }
+
+    /**
+     * @return StrategyInterface[]
+     */
+    public function getStrategies(): array
+    {
+        return $this->strategies;
     }
 
     public function increment(string $name, WrapperInterface $wrapper)

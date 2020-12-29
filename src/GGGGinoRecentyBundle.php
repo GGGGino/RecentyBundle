@@ -8,6 +8,10 @@ use GGGGino\RecentyBundle\DependencyInjection\GGGGinoRecentyExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
+/**
+ * Class GGGGinoRecentyBundle
+ * @package GGGGino\RecentyBundle
+ */
 class GGGGinoRecentyBundle extends Bundle
 {
     /**
