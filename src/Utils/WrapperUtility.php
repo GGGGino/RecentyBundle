@@ -20,9 +20,9 @@ class WrapperUtility
     {
         return sprintf("%s%s%s%s",
             strval($wrapper->getUserId()),
-            $wrapper->getEntityTypeId(),
-            $wrapper->getEntityId(),
-            $wrapper->getContext());
+            strval($wrapper->getEntityTypeId()),
+            strval($wrapper->getEntityId()),
+            strval($wrapper->getContext()));
     }
 
     /**

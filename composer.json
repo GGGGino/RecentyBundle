@@ -32,5 +32,10 @@
         "exclude-from-classmap": [
             "/tests/"
         ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "GGGGino\\RecentyBundle\\Tests\\": "/Tests/"
+        }
     }
 }

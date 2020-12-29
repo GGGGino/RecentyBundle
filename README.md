@@ -30,6 +30,8 @@ services:
         arguments: ['@GGGGino\RecentyBundle\Storage\StorageVolatile']
 ```
 
+> `shared: false` permit to instantiate a object every time it is called 
+
 recenty_bundle.yaml
 ```yaml
 ggggino_recenty:
@@ -69,6 +71,10 @@ Strategy is the way a Entity will be stored and retrivied
 ### Storages
 
 Storage is the place where the Entity will be stored
+
+## Test
+
+`./vendor/bin/simple-phpunit -c bundles/GGGGino/RecentyBundle/phpunit.xml.dist --bootstrap ./vendor/autoload.php`
 
 ## TODO
 
