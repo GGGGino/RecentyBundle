@@ -27,11 +27,13 @@ class WrapperGenericEntity implements WrapperInterface
      * WrapperGenericEntity constructor.
      * @param object $entity
      * @param string $context
+     * @param $userId
      */
-    public function __construct($entity, $context)
+    public function __construct($entity, $context, $userId)
     {
         $this->entity = $entity;
         $this->context = $context;
+        $this->userId = $userId;
     }
 
     /**

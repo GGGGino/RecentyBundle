@@ -28,14 +28,11 @@
     "autoload": {
         "psr-4": {
             "GGGGino\\RecentyBundle\\": "src/"
-        },
-        "exclude-from-classmap": [
-            "/tests/"
-        ]
+        }
     },
     "autoload-dev": {
         "psr-4": {
-            "GGGGino\\RecentyBundle\\Tests\\": "/Tests/"
+            "GGGGino\\RecentyBundle\\Tests\\": "tests"
         }
     }
 }

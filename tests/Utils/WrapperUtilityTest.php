@@ -19,12 +19,11 @@ class WrapperUtilityTest extends TestCase
         $testEntity = new TestSampleEntity();
         $testEntity->setId(2);
 
-        $wrapper = new WrapperGenericEntity($testEntity, 'prova');
-        $wrapper->setUserId('ciao');
+        $wrapper = new WrapperGenericEntity($testEntity, 'prova', 'userId');
 
         $hashCreated = WrapperUtility::getHash($wrapper);
 
-        $this->assertEquals('ciaoGGGGino\RecentyBundle\Tests\TestSampleEntity2prova', $hashCreated);
+        $this->assertEquals('userIdGGGGino\RecentyBundle\Tests\TestSampleEntity2prova', $hashCreated);
     }
 
     public function testCreateRecenty()

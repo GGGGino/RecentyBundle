@@ -72,9 +72,14 @@ Strategy is the way a Entity will be stored and retrivied
 
 Storage is the place where the Entity will be stored
 
-## Test
+## Contribute
 
-`./vendor/bin/simple-phpunit -c bundles/GGGGino/RecentyBundle/phpunit.xml.dist --bootstrap ./vendor/autoload.php`
+#### install
+
+`composer install`
+
+#### Test
+`./vendor/bin/simple-phpunit`
 
 ## TODO
 

@@ -12,8 +12,10 @@ class WrapperGenericEntityTest extends TestCase
     {
         $testEntity = new TestSampleEntity();
 
-        $wrapper = new WrapperGenericEntity($testEntity, 'prova');
+        $wrapper = new WrapperGenericEntity($testEntity, 'prova', 'userId');
 
         $this->assertEquals('prova', $wrapper->getContext());
+        $this->assertEquals('userId', $wrapper->getUserId());
+        $this->assertEquals('GGGGino\RecentyBundle\Tests\TestSampleEntity', $wrapper->getEntityTypeId());
     }
 }
