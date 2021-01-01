@@ -2,6 +2,8 @@
 
 namespace GGGGino\RecentyBundle\Tests\Utils;
 
+use GGGGino\RecentyBundle\Model\Recenty;
+use GGGGino\RecentyBundle\Model\RecentyInterface;
 use GGGGino\RecentyBundle\Tests\TestSampleEntity;
 use GGGGino\RecentyBundle\Utils\WrapperUtility;
 use GGGGino\RecentyBundle\Wrapper\WrapperGenericEntity;
@@ -25,9 +27,12 @@ class WrapperUtilityTest extends TestCase
 
     public function testUpdateRecenty()
     {
-        $hashCreated = WrapperUtility::getHash($this->genericWrapper);
+        $recentyEntity = new Recenty();
+        WrapperUtility::updateRecenty($this->genericWrapper, $recentyEntity);
 
-        $this->assertEquals('userIdGGGGino\RecentyBundle\Tests\TestSampleEntity2prova', $hashCreated);
+        $this->assertEquals('prova', $recentyEntity->getContext());
+        $this->assertEquals(2, $recentyEntity->getEntityId());
+        $this->assertEquals(TestSampleEntity::class, $recentyEntity->getEntityTypeId());
     }
 
     public function testGetHash()
@@ -39,8 +44,11 @@ class WrapperUtilityTest extends TestCase
 
     public function testCreateRecenty()
     {
-        $hashCreated = WrapperUtility::getHash($this->genericWrapper);
+        /** @var RecentyInterface $recentyEntity */
+        $recentyEntity = WrapperUtility::createRecenty($this->genericWrapper);
 
-        $this->assertEquals('userIdGGGGino\RecentyBundle\Tests\TestSampleEntity2prova', $hashCreated);
+        $this->assertEquals('prova', $recentyEntity->getContext());
+        $this->assertEquals(2, $recentyEntity->getEntityId());
+        $this->assertEquals(TestSampleEntity::class, $recentyEntity->getEntityTypeId());
     }
 }

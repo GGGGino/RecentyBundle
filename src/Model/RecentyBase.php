@@ -6,7 +6,7 @@ namespace GGGGino\RecentyBundle\Model;
  * Class RecentyBase
  * @package GGGGino\RecentyBundle\Model
  */
-abstract class RecentyBase
+abstract class RecentyBase implements RecentyInterface
 {
     /**
      * @var integer
