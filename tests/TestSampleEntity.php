@@ -2,6 +2,12 @@
 
 namespace GGGGino\RecentyBundle\Tests;
 
+/**
+ * Used as common database entity
+ *
+ * Class TestSampleEntity
+ * @package GGGGino\RecentyBundle\Tests
+ */
 class TestSampleEntity
 {
     private $id;
