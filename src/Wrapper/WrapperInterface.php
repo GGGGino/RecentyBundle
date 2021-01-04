@@ -15,4 +15,6 @@ interface WrapperInterface
     public function getContext(): string;
 
     public function getUserId(): string;
+
+    public function __sleep();
 }

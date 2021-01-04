@@ -2,8 +2,10 @@
 
 namespace GGGGino\RecentyBundle\Storage;
 
+use Doctrine\Common\Collections\Criteria;
 use GGGGino\RecentyBundle\Model\RecentyInterface;
 use GGGGino\RecentyBundle\Wrapper\WrapperInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
  * Interface StorageInterface
@@ -12,37 +14,20 @@ use GGGGino\RecentyBundle\Wrapper\WrapperInterface;
 interface StorageInterface
 {
     /**
-     * @param WrapperInterface $wrapper
+     * @param RecentyInterface $recenty
      */
-    public function save(WrapperInterface $wrapper);
+    public function save(RecentyInterface $recenty);
 
     /**
      * @param WrapperInterface $wrapper
+     * @param mixed $extra
      * @return RecentyInterface[]
      */
-    public function retrieveMineAll(WrapperInterface $wrapper);
+    public function retrieveCustom(WrapperInterface $wrapper, $extra);
 
     /**
      * @param WrapperInterface $wrapper
-     * @return RecentyInterface[]
-     */
-    public function retrieveMineContext(WrapperInterface $wrapper);
-
-    /**
-     * @param WrapperInterface $wrapper
-     * @return RecentyInterface[]
-     */
-    public function retrieveMineEntityType(WrapperInterface $wrapper);
-
-    /**
-     * @param WrapperInterface $wrapper
-     * @return RecentyInterface[]
-     */
-    public function retrieveMineEntity(WrapperInterface $wrapper);
-
-    /**
-     * @param WrapperInterface $wrapper
-     * @return RecentyInterface[]
+     * @return RecentyInterface
      */
     public function retrieveStrict(WrapperInterface $wrapper);
 }

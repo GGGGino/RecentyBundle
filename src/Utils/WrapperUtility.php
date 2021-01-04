@@ -13,21 +13,21 @@ use GGGGino\RecentyBundle\Wrapper\WrapperInterface;
 class WrapperUtility
 {
     /**
-     * @param WrapperInterface $wrapper
+     * @param RecentyInterface $recenty
      * @return string
      */
-    public static function getHash(WrapperInterface $wrapper)
+    public static function getHash(RecentyInterface $recenty)
     {
         return sprintf("%s%s%s%s",
-            strval($wrapper->getUserId()),
-            strval($wrapper->getEntityTypeId()),
-            strval($wrapper->getEntityId()),
-            strval($wrapper->getContext()));
+            strval($recenty->getUserId()),
+            strval($recenty->getEntityTypeId()),
+            strval($recenty->getEntityId()),
+            strval($recenty->getContext()));
     }
 
     /**
      * @param WrapperInterface $wrapper
-     * @return string
+     * @return Recenty
      */
     public static function createRecenty(WrapperInterface $wrapper)
     {

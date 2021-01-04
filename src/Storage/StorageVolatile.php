@@ -25,18 +25,9 @@ class StorageVolatile implements StorageInterface
     /**
      * @inheritDoc
      */
-    public function save(WrapperInterface $wrapper)
+    public function save(RecentyInterface $recenty)
     {
-        if (!isset($this->rows[WrapperUtility::getHash($wrapper)])) {
-            $recenty = WrapperUtility::createRecenty($wrapper);
-
-            $this->rows[WrapperUtility::getHash($wrapper)] = $recenty;
-            return;
-        }
-
-        $recenty = $this->rows[WrapperUtility::getHash($wrapper)];
-
-        WrapperUtility::updateRecenty($wrapper, $recenty);
+        $this->rows[WrapperUtility::getHash($recenty)] = $recenty;
     }
 
     /**
@@ -90,11 +81,31 @@ class StorageVolatile implements StorageInterface
      */
     public function retrieveStrict(WrapperInterface $wrapper)
     {
-        return array_filter($this->rows, function (RecentyInterface $recenty) use ($wrapper) {
+        $rowsFiltered = array_filter($this->rows, function (RecentyInterface $recenty) use ($wrapper) {
             return $recenty->getUserId() === $wrapper->getUserId()
                 && $recenty->getContext() === $wrapper->getContext()
                 && $recenty->getEntityTypeId() === $wrapper->getEntityTypeId()
                 && $recenty->getEntityId() === $wrapper->getEntityId();
+        });
+
+        return reset($rowsFiltered);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function retrieveCustom(WrapperInterface $wrapper, $extra)
+    {
+        return array_filter($this->rows, function (RecentyInterface $recenty) use ($extra) {
+            if (isset($extra['userId']) && $recenty->getUserId() !== $extra['userId']) { return false; }
+
+            if (isset($extra['context']) && $recenty->getContext() !== $extra['context']) { return false; }
+
+            if (isset($extra['entityTypeId']) && $recenty->getEntityTypeId() !== $extra['entityTypeId']) { return false; }
+
+            if (isset($extra['entityId']) && $recenty->getEntityId() !== $extra['entityId']) { return false; }
+
+            return true;
         });
     }
 }

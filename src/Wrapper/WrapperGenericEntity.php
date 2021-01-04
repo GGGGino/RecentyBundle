@@ -2,6 +2,8 @@
 
 namespace GGGGino\RecentyBundle\Wrapper;
 
+use GGGGino\RecentyBundle\Exception\EntityNotValidException;
+
 /**
  * Class WrapperGenericEntity
  * @package GGGGino\RecentyBundle\Wrapper
@@ -28,12 +30,30 @@ class WrapperGenericEntity implements WrapperInterface
      * @param object $entity
      * @param string $context
      * @param $userId
+     * @throws EntityNotValidException
      */
     public function __construct($entity, $context, $userId)
     {
+        if (!$entity->getId()) {
+            throw new EntityNotValidException("Entity does not exist");
+        }
+
         $this->entity = $entity;
         $this->context = $context;
         $this->userId = $userId;
+    }
+
+    /**
+     * How object will be serialized
+     */
+    public function __sleep()
+    {
+        return array(
+            'userId' => $this->getUserId(),
+            'context' => $this->getContext(),
+            'entityTypeId' => $this->getEntityTypeId(),
+            'entityId' => $this->getEntityId()
+        );
     }
 
     /**

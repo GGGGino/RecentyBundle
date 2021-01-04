@@ -2,10 +2,11 @@
 
 namespace GGGGino\RecentyBundle\Storage;
 
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use GGGGino\RecentyBundle\Model\RecentyBase;
 use GGGGino\RecentyBundle\Model\RecentyInterface;
-use GGGGino\RecentyBundle\Utils\WrapperUtility;
 use GGGGino\RecentyBundle\Wrapper\WrapperInterface;
 
 /**
@@ -27,22 +28,19 @@ class StorageORM implements StorageInterface
     /**
      * @inheritDoc
      */
-    public function save(WrapperInterface $wrapper)
+    public function save(RecentyInterface $recenty)
     {
         $recentyRepo = $this->em->getRepository(RecentyBase::class);
 
         /** @var RecentyInterface $recenty */
         $recenty = $recentyRepo->findOneBy(array(
-            'userId' => $wrapper->getUserId(),
-            'context' => $wrapper->getContext(),
-            'entityTypeId' => $wrapper->getEntityTypeId(),
-            'entityId' => $wrapper->getEntityId()
+            'userId' => $recenty->getUserId(),
+            'context' => $recenty->getContext(),
+            'entityTypeId' => $recenty->getEntityTypeId(),
+            'entityId' => $recenty->getEntityId()
         ));
 
-        if ($recenty) {
-            WrapperUtility::updateRecenty($wrapper, $recenty);
-        } else {
-            $recenty = WrapperUtility::createRecenty($wrapper);
+        if (!$recenty) {
             $this->em->persist($recenty);
         }
 
@@ -52,40 +50,49 @@ class StorageORM implements StorageInterface
     /**
      * @inheritDoc
      */
-    public function retrieveMineAll(WrapperInterface $wrapper)
-    {
-        // TODO: Implement retrieveMineAll() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function retrieveMineContext(WrapperInterface $wrapper)
-    {
-        // TODO: Implement retrieveMineContext() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function retrieveMineEntityType(WrapperInterface $wrapper)
-    {
-        // TODO: Implement retrieveMineEntityType() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function retrieveMineEntity(WrapperInterface $wrapper)
-    {
-        // TODO: Implement retrieveMineEntity() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function retrieveStrict(WrapperInterface $wrapper)
     {
-        // TODO: Implement retrieveStrict() method.
+        $recentyRepo = $this->em->getRepository(RecentyBase::class);
+
+        return $recentyRepo->findOneBy(array(
+            'userId' => $wrapper->getUserId(),
+            'context' => $wrapper->getContext(),
+            'entityTypeId' => $wrapper->getEntityTypeId(),
+            'entityId' => $wrapper->getEntityId()
+        ));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function retrieveCustom(WrapperInterface $wrapper, $extra)
+    {
+        /** @var EntityRepository $recentyRepo */
+        $recentyRepo = $this->em->getRepository(RecentyBase::class);
+
+        /** @var Criteria $criteria */
+        $criteria = Criteria::create();
+
+        if (isset($extra['userId'])) {
+            $criteria->andWhere(Criteria::expr()->eq('userId', $extra['userId']));
+        }
+
+        if (isset($extra['context'])) {
+            $criteria->andWhere(Criteria::expr()->eq('context', $extra['context']));
+        }
+
+        if (isset($extra['entityTypeId'])) {
+            $criteria->andWhere(Criteria::expr()->eq('entityTypeId', $extra['entityTypeId']));
+        }
+
+        if (isset($extra['entityId'])) {
+            $criteria->andWhere(Criteria::expr()->eq('entityId', $extra['entityId']));
+        }
+
+        if (isset($extra['order'])) {
+            $criteria->orderBy(array($extra['order']['field'] => $extra['order']['direction']));
+        }
+
+        return $recentyRepo->matching($criteria);
     }
 }

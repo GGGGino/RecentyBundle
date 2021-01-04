@@ -33,10 +33,25 @@ class WrapperManager
         return $this->strategies;
     }
 
+    /**
+     * @param string $name
+     * @param WrapperInterface $wrapper
+     */
     public function increment(string $name, WrapperInterface $wrapper)
     {
         if (!isset($this->strategies[$name])) { return; }
 
         $this->strategies[$name]->increment($wrapper);
+    }
+
+    /**
+     * @param string $name
+     * @param WrapperInterface $wrapper
+     */
+    public function decrement(string $name, WrapperInterface $wrapper)
+    {
+        if (!isset($this->strategies[$name])) { return; }
+
+        $this->strategies[$name]->decrement($wrapper);
     }
 }

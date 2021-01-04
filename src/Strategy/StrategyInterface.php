@@ -2,6 +2,7 @@
 
 namespace GGGGino\RecentyBundle\Strategy;
 
+use GGGGino\RecentyBundle\Model\RecentyInterface;
 use GGGGino\RecentyBundle\Wrapper\WrapperInterface;
 
 /**
@@ -21,4 +22,10 @@ interface StrategyInterface
      * @param WrapperInterface $wrapper
      */
     public function decrement(WrapperInterface $wrapper);
+
+    /**
+     * @param WrapperInterface $wrapper
+     * @return RecentyInterface[]
+     */
+    public function retrieveStrict(WrapperInterface $wrapper);
 }
