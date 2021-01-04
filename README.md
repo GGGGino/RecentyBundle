@@ -56,6 +56,17 @@ public function index(WrapperManager $wrapperManager): Response
 {
     $strategies = $wrapperManager->getStrategies();
     
+    /** @var Product $product */
+    $product = $em->getRepository(Product::class)->find(1);
+
+    try {
+        $wrapperManager->increment('main', new WrapperGenericEntity($product, 'bought', 2));
+    } catch (EntityNotValidException $e) {
+        return $this->json([
+            'message' => 'Wrapper not generable!'
+        ], 500);
+    }
+    
     return $this->json([
         'message' => 'Welcome to your new controller!'
     ]);
@@ -73,10 +84,6 @@ Strategy is the way a Entity will be stored and retrivied
 Storage is the place where the Entity will be stored
 
 ## Contribute
-
-#### install
-
-`composer install`
 
 #### Test
 `./vendor/bin/simple-phpunit`
